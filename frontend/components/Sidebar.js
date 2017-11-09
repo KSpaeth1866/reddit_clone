@@ -1,26 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {Dialog, FlatButton, RaisedButton} from 'material-ui';
+import ModalLogin from './modalLogin';
+import ModalRegister from './modalRegister';
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      modalL: false
+    };
   }
   handleNewPost() {
-    // redirect to new page or maybe open modal or something
-  }
-  handleLogin() {
-    this.props.openLoginModal();
-  }
-  handleRegister() {
-    this.props.openRegisterModal();
+    console.log("REDIRECT TO NEW POST PAGE\n NONE YET😫");
+    // TODO: create new post page and finish route
+
   }
   render() {
     return (
       <div>
-        <h1>{this.props.name}</h1>
-        <button onClick={this.handleNewPost}>New Post</button>
-        <button onClick={this.handleLogin}>Login</button>
-        <button onClick={this.handleRegister}>Register</button>
+
+        <RaisedButton label="New Post" onClick={this.handleNewPost}/>
+        <ModalLogin />
+        <ModalRegister />
+
       </div>
 
     );
@@ -30,7 +34,10 @@ class Sidebar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    sub: state.sub
+
+    sub: state.sub,
+    modal: state.modal,
+
   };
 };
 
@@ -40,10 +47,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({type: 'NEW_POST_REDIRECT'});
     },
     openLoginModal: () => {
-      dispatch({type: 'OPEN_LOGIN_MODAL'});
+
+      dispatch({type: 'TOGGLE_LOGIN_MODAL'});
     },
-    openRegisterModal: () => {
-      dispatch({type: 'OPEN_REGISTER_MODAL'});
     }
   };
 };

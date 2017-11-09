@@ -5,6 +5,7 @@ import Title from '../components/Title';
 import Header from '../components/Header';
 import Feed from '../components/Feed';
 import Sidebar from '../components/Sidebar';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class AppContainer extends React.Component {
   constructor(props) {
@@ -13,19 +14,21 @@ class AppContainer extends React.Component {
 
   render() {
     return (
-      <div>
-        <Title name={this.props.name} />
-        <Header />
-        <Feed />
-        <Sidebar />
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <Title name={this.props.name} />
+          <Header />
+          <Feed />
+          <Sidebar />
+        </div>
+      </MuiThemeProvider>
     );
   }
 };
 
 const mapStateToProps = (state) => {
   return {
-    name: state.name,
+    name: state.title,
   };
 };
 
