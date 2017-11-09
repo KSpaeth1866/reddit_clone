@@ -1,27 +1,50 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Sidebar extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
-
+  handleNewPost() {
+    // redirect to new page or maybe open modal or something
+  }
+  handleLogin() {
+    this.props.openLoginModal();
+  }
+  handleRegister() {
+    this.props.openRegisterModal();
+  }
   render() {
     return (
-      <h1>{this.props.name}</h1>
+      <div>
+        <h1>{this.props.name}</h1>
+        <button onClick={this.handleNewPost}>New Post</button>
+        <button onClick={this.handleLogin}>Login</button>
+        <button onClick={this.handleRegister}>Register</button>
+      </div>
+
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   return {
-    name: state.name,
+    user: state.user,
+    sub: state.sub
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    newPostRedirect: () => {
+      dispatch({type: 'NEW_POST_REDIRECT'});
+    },
+    openLoginModal: () => {
+      dispatch({type: 'OPEN_LOGIN_MODAL'});
+    },
+    openRegisterModal: () => {
+      dispatch({type: 'OPEN_REGISTER_MODAL'});
+    }
   };
 };
 
