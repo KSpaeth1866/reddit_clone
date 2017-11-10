@@ -8,9 +8,6 @@ const {
 } = require('../models');
 
 function createRouter(passport) {
-  router.get('/', function(req,res) {
-    res.send("Hearing you loud and clear!")
-  })
   router.post('/user/register', async (req, res, next) => {
     if (req.body.password !== req.body.password2) {
       res.status(400).json({
@@ -24,11 +21,16 @@ function createRouter(passport) {
           username: req.body.username,
           password: req.body.password,
         })
-        res.status(200).json({success: true, user});
+        res.status(200).json({
+          success: true,
+          user,
+        });
       }
       catch (err) {
-        res.status(400).json(err)
-        console.log(err);
+        res.status(400).json({
+          success: 'false',
+          err,
+        })
       }
     }
   });
@@ -41,8 +43,6 @@ function createRouter(passport) {
       res.status(200).json({
         success: 'true',
         user,
-        req: req.user,
-        msg: 'hi',
       })
     }
   );
@@ -109,6 +109,35 @@ function createRouter(passport) {
       }
     }
     catch(err) {
+      res.status(400).json({
+        success: 'false',
+        err,
+      })
+    }
+  })
+
+  router.post('/post/new', async (req, res) => {
+    try {
+      let post;
+      if (req.body.postId) {
+        post = await Post.create({
+          userId: req.user.id,
+          message: req.body.message,
+          postId: req.body.postId,
+        })
+      }
+      else {
+        post = await Post.create({
+          userId: req.user.id,
+          message: req.body.message,
+        })
+      }
+      res.status(200).json({
+        success: true,
+        post,
+      });
+    }
+    catch (err) {
       res.status(400).json({
         success: 'false',
         err,
