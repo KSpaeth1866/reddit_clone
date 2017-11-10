@@ -7,6 +7,9 @@ class ModalRegister extends React.Component {
     super(props);
     this.state = {
       open: false,
+      username: "",
+      password: "",
+      password2: ""
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -14,22 +17,43 @@ class ModalRegister extends React.Component {
       open: nextProps.modal
     });
   }
+  handleUsernameChange(e) {
+    const un = e.target.value;
+    this.setState({
+      username: un
+    });
+  }
+  handlePasswordChange(e) {
+    const pw = e.target.value;
+    this.setState({
+      password: pw
+    });
+  }
+  handlePassword2Change(e) {
+    const pw = e.target.value;
+    this.setState({
+      password2: pw
+    });
+  }
   toggle() {
     this.props.toggleModal();
   }
-
+  submit() {
+    this.props.submitRegister(this.state.username, this.state.password)
+    console.log(this.state.username, this.state.password);
+    this.toggle();
+  }
   render() {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
+        primary="true"
         onClick={() => this.toggle()}
       />,
       <FlatButton
         label="Submit"
-        primary={true}
-        disabled={true}
-        onClick={() => this.toggle()}
+        primary="true"
+        onClick={() => this.submit()}
       />,
     ];
 
@@ -46,15 +70,18 @@ class ModalRegister extends React.Component {
           <TextField
              hintText="Joe Shmoe"
              floatingLabelText="Username"
+             onChange={(e) => this.handleUsernameChange(e)}
            /><br />
           <TextField
              hintText="😛"
              floatingLabelText="Password"
+             onChange={(e) => this.handlePasswordChange(e)}
              type="password"
            /><br />
           <TextField
              hintText="😜"
              floatingLabelText="Confirm Password"
+             onChange={(e) => this.handlePassword2Change(e)}
              type="password"
            /><br />
         </Dialog>
@@ -72,6 +99,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleModal: () => {
       dispatch({type: 'TOGGLE_REGISTER_MODAL'});
+    },
+    submitRegister: (un, pw) => {
+      dispatch({ type: 'SUBMIT_REGISTER', username: un, password: pw});
     }
   };
 };

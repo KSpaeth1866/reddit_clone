@@ -22,12 +22,14 @@ class ModalLogin extends React.Component {
       password: ''
     });
   }
-  handleUsernameChange(un) {
+  handleUsernameChange(e) {
+    const un = e.target.value;
     this.setState({
       username: un
-    })
+    });
   }
-  handlePasswordChange(pw) {
+  handlePasswordChange(e) {
+    const pw = e.target.value;
     this.setState({
       password: pw
     });
@@ -36,19 +38,20 @@ class ModalLogin extends React.Component {
     this.props.toggleModal();
   }
   submit() {
-    this.props.submitLogin(username,password)
+    this.props.submitLogin(this.state.username,this.state.password)
+    console.log(this.state.username,this.state.password);
+    this.toggle();
   }
   render() {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
+        primary={'true'}
         onClick={() => this.toggle()}
       />,
       <FlatButton
         label="Submit"
-        primary={true}
-        disabled={true}
+        primary={'true'}
         onClick={() => this.submit()}
       />,
     ];
@@ -66,13 +69,13 @@ class ModalLogin extends React.Component {
           <TextField
              hintText="Joe Shmoe"
              floatingLabelText="Username"
-             onChange={() => this.handleUsernameChange()}
+             onChange={(e) => this.handleUsernameChange(e)}
              value={this.state.username}
            /><br />
           <TextField
              floatingLabelText="Password"
              type="password"
-             onChange={() => this.handlePasswordChange()}
+             onChange={(e) => this.handlePasswordChange(e)}
            /><br />
         </Dialog>
       </div>

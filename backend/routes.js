@@ -21,7 +21,7 @@ function createRouter(passport) {
           username: req.body.username,
           password: req.body.password,
         })
-        res.status(200).json(user);
+        res.status(200).json({success: true, user});
       }
       catch (err) {
         res.status(400).json(err)

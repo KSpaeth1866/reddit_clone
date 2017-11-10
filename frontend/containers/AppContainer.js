@@ -16,7 +16,7 @@ class AppContainer extends React.Component {
 
       <MuiThemeProvider>
         <div>
-          <Title name={this.props.name} />
+          {/* <Title name={this.props.name} /> */}
           <Header />
           <Feed />
           <Sidebar />
