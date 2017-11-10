@@ -23,8 +23,10 @@ class Feed extends React.Component {
   render() {
     return (
       <div>
+        <h1>FEED</h1>
         {this.state.posts.map(post =>
           <Post
+            key={Math.random()}
             id={post.id}
             message={post.message}
             createdAt={post.createdAt}
@@ -49,3 +51,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+// export default Feed

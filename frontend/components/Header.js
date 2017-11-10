@@ -4,19 +4,24 @@ import { connect } from 'react-redux';
 
 class Header extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
     return (
-      <h1>{this.props.title}</h1>
+      <div>
+        <h1>{this.props.title}</h1>
+        { this.props.username.length !== 0 ?
+          <h2>Welcome, {this.props.username}</h2> : <p/> }
+        </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   return {
     title: state.title,
+    username: state.user.username,
   };
 };
 

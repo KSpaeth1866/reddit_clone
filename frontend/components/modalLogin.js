@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dialog, FlatButton, RaisedButton, TextField} from 'material-ui';
-
 import axios from 'axios';
 
 /**
@@ -37,28 +36,33 @@ class ModalLogin extends React.Component {
   toggle() {
     this.props.toggleModal();
   }
-  submit() {
-    this.props.submitLogin(this.state.username,this.state.password)
-    console.log(this.state.username,this.state.password);
-    this.toggle();
+  async submit() {
+    try {
+      const result = await axios.post('http://localhost:3000/api/user/login', {
+        username: this.state.username,
+        password: this.state.password,
+      });
+      console.log(result.data.user);
+      this.props.submitLogin(result.data.user.username, result.data.user.id);
+      this.toggle();
+    } catch (e) {
+      console.log("YO FUCKED UP", e);
+    }
   }
   render() {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={'true'}
         onClick={() => this.toggle()}
       />,
       <FlatButton
         label="Submit"
-        primary={'true'}
         onClick={() => this.submit()}
       />,
     ];
 
     return (
       <div>
-        <RaisedButton label="Open Login" onClick={() => this.toggle()} />
         <Dialog
           title="Login"
           actions={actions}
@@ -93,10 +97,9 @@ const mapDispatchToProps = (dispatch) => {
     toggleModal: () => {
       dispatch({type: 'TOGGLE_LOGIN_MODAL'});
     },
-    submitLogin: () => {
-      dispatch({type: "SUBMIT_LOGIN"});
+    submitLogin: (un, id) => {
+      dispatch({type: "SUBMIT_LOGIN", username: un, id: id});
     },
-
   };
 };
 

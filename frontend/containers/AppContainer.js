@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import  {Switch, Route} from 'react-router-dom';
 import Header from '../components/Header';
 import Feed from '../components/Feed';
 import Sidebar from '../components/Sidebar';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import NewPost from '../components/NewPost';
+
 
 class AppContainer extends React.Component {
   constructor(props) {
@@ -12,21 +13,22 @@ class AppContainer extends React.Component {
   }
 
   render() {
+    console.log('RENDER');
     return (
-
-      <MuiThemeProvider>
         <div>
-          {/* <Title name={this.props.name} /> */}
           <Header />
-          <Feed />
+          <Switch >
+            <Route exact path="/" component={Feed}/>
+            <Route exact path="/post/new" component={NewPost}/>
+          </Switch>
           <Sidebar />
         </div>
-      </MuiThemeProvider>
     );
   }
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps);
   return {
     name: state.title,
   };
@@ -37,4 +39,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+// export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default AppContainer;

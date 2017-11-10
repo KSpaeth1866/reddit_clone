@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Dialog, FlatButton, RaisedButton, TextField} from 'material-ui';
+import axios from 'axios';
 
 class ModalRegister extends React.Component {
   constructor(props) {
@@ -38,28 +39,34 @@ class ModalRegister extends React.Component {
   toggle() {
     this.props.toggleModal();
   }
-  submit() {
-    this.props.submitRegister(this.state.username, this.state.password)
-    console.log(this.state.username, this.state.password);
-    this.toggle();
+  async submit() {
+    try {
+      const result = await axios.post('http://localhost:3000/api/user/register', {
+        username: this.state.username,
+        password: this.state.password,
+        password2: this.state.password2,
+      });
+      console.log(result);
+      this.props.submitRegister(result.data.user.username, result.data.user.id);
+      this.toggle();
+    } catch (e) {
+      console.log("YO FUCKED UP",e);
+    }
   }
   render() {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary="true"
         onClick={() => this.toggle()}
       />,
       <FlatButton
         label="Submit"
-        primary="true"
         onClick={() => this.submit()}
       />,
     ];
 
     return (
       <div>
-        <RaisedButton label="Register" onClick={() => this.toggle()} />
         <Dialog
           title="Register"
           actions={actions}
@@ -100,8 +107,8 @@ const mapDispatchToProps = (dispatch) => {
     toggleModal: () => {
       dispatch({type: 'TOGGLE_REGISTER_MODAL'});
     },
-    submitRegister: (un, pw) => {
-      dispatch({ type: 'SUBMIT_REGISTER', username: un, password: pw});
+    submitRegister: (un, id) => {
+      dispatch({ type: 'SUBMIT_REGISTER', username: un, id: id});
     }
   };
 };

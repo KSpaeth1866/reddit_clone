@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Dialog, FlatButton, RaisedButton} from 'material-ui';
 import ModalLogin from './modalLogin';
 import ModalRegister from './modalRegister';
+import UserButtons from './UserButtons';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div>
-        <RaisedButton label="New Post" onClick={this.handleNewPost}/>
+        <UserButtons />
         <ModalLogin />
         <ModalRegister />
 

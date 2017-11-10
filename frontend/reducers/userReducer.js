@@ -1,30 +1,26 @@
 import * as types from '../actions/types';
-import axios from 'axios';
 const generateState = () => {
   return {
-    user: {},
+    id: '',
+    username: '',
   };
 };
 
 const initialState = generateState();
-
-const modalReducer = async function(state = initialState, action) {
+const userReducer = function userReducer(state = initialState, action) {
   switch (action.type) {
+    case "LOGOUT":
+      return initialState;
     case "SUBMIT_LOGIN":
-      const {user} = await axios.post('http://localhost:3000/#/api/user/login', {
-        username: action.username,
-        password: action.password
-      });
-      return // TODO: new stat;
+      const newState = {
+        id: action.id,
+        username: action.username
+      };
+      return newState;
     case "SUBMIT_REGISTER":
-      const result = await axios.post('http://localhost:3000/#/api/user/register', {
-        username: action.username,
-        password: action.password
-      });
-      return // TODO: new state;
     default:
       return state;
   }
 };
 
-export default modalReducer;
+export default userReducer;

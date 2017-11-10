@@ -10,7 +10,7 @@ class Post extends React.Component {
   render() {
     return (
       <div>
-        <div>{this.props.message}</div>
+        {/* <div>{this.props.message}</div> */}
       </div>
     );
   }

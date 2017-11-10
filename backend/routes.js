@@ -8,6 +8,9 @@ const {
 } = require('../models');
 
 function createRouter(passport) {
+  router.get('/', function(req,res) {
+    res.send("Hearing you loud and clear!")
+  })
   router.post('/user/register', async (req, res, next) => {
     if (req.body.password !== req.body.password2) {
       res.status(400).json({
