@@ -15,12 +15,10 @@ class Sidebar extends React.Component {
   handleNewPost() {
     console.log("REDIRECT TO NEW POST PAGE\n NONE YET😫");
     // TODO: create new post page and finish route
-
   }
   render() {
     return (
       <div>
-
         <RaisedButton label="New Post" onClick={this.handleNewPost}/>
         <ModalLogin />
         <ModalRegister />
@@ -50,6 +48,9 @@ const mapDispatchToProps = (dispatch) => {
 
       dispatch({type: 'TOGGLE_LOGIN_MODAL'});
     },
+    openRegisterModal: () => {
+      dispatch({type: 'TOGGLE_REGISTER_MODAL'});
+
     }
   };
 };
