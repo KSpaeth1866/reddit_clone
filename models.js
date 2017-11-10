@@ -35,7 +35,15 @@ const Post = sequelize.define('post', {
 });
 
 Post.belongsTo(User);
-Post.belongsTo(Post, {as:'parent'});
+// Post.belongsTo(Post, {as:'parent'});
+Post.hasMany(Post, {
+  as: 'children',
+  foreignKey: 'postId'
+});
+Post.belongsTo(Post, {
+  as: 'parent',
+  foreignKey: 'postId'
+});
 // Post.findAll({include: {model: Post, as: 'parent'}})
 // Post.hasOne(Post, {as:'Parent', foreignKey: 'parentId'});
 
