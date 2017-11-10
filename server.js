@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const createRouter = require('./backend/routes');
-const auth = require('./backend/auth');
 const bodyParser = require('body-parser');
 const {
   User,
@@ -37,7 +36,6 @@ passport.deserializeUser(function(id, done) {
     done(null, user)
   })
   .catch(err => {
-    console.log(err);
     done(err, null)
   })
 });
@@ -54,7 +52,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
     else return done(null, user)
   })
   .catch(err => {
-    console.log(err);
     done(err, null)
   })
 }));
@@ -66,6 +63,6 @@ app.use('/api', createRouter(passport));
 
 app.listen(PORT, error => {
     error
-    ? console.error(error)
-    : console.info(`==> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`);
+    ? console.error(`\n\n\nerror\n\n\n`)
+    : console.info(`\n\n\n==> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.\n\n\n`);
 });
