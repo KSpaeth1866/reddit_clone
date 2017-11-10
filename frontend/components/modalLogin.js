@@ -30,18 +30,14 @@ class ModalLogin extends React.Component {
   handlePasswordChange(pw) {
     this.setState({
       password: pw
-    })
+    });
   }
   toggle() {
-    this.props.toggleModal()
+    this.props.toggleModal();
   }
   submit() {
-    axios.post('http://localhost:3000/#/api/user/login',{
-      username:this.state.username,
-      password:this.state.password,
-    })
+    this.props.submitLogin(username,password)
   }
-
   render() {
     const actions = [
       <FlatButton
@@ -53,7 +49,7 @@ class ModalLogin extends React.Component {
         label="Submit"
         primary={true}
         disabled={true}
-        onClick={() => this.toggle()}
+        onClick={() => this.submit()}
       />,
     ];
 
@@ -70,17 +66,13 @@ class ModalLogin extends React.Component {
           <TextField
              hintText="Joe Shmoe"
              floatingLabelText="Username"
-
+             onChange={() => this.handleUsernameChange()}
              value={this.state.username}
-
            /><br />
           <TextField
              floatingLabelText="Password"
              type="password"
-
-             // onChange={() => handlePasswordChange()}
-             value={this.state.password}
-
+             onChange={() => this.handlePasswordChange()}
            /><br />
         </Dialog>
       </div>
@@ -96,7 +88,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleModal: () => {
-
       dispatch({type: 'TOGGLE_LOGIN_MODAL'});
     },
     submitLogin: () => {
